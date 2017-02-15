@@ -1,0 +1,44 @@
+apiVersion: v1
+kind: Service
+metadata: 
+  name: kong-app
+spec:
+  ports:
+    - port: 8000
+      targetPort: 8000
+      name: http
+    - port: 8001
+      targetPort: 8001
+      name: admin
+  selector:
+    name: kong-app
+
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: kong-app
+spec:
+  template:
+    metadata:
+      labels:
+        name: kong-app
+        tier: development
+    spec:
+      containers:
+        - name: kong-app
+          image: containers.cisco.com/oneidentity/kong:0.9.9
+          env:
+            - name: KONG_DATABASE
+              value: cassandra
+            - name: KONG_CASSANDRA_CONTACT_POINTS
+              value: cassandra
+            - name: KONG_CASSANDRA_KEYSPACE
+              value: kong
+
+          ports:
+            - containerPort: 8000
+            - containerPort: 8001
+            - containerPort: 7946
+            - containerPort: 7946
+              protocol: UDP
