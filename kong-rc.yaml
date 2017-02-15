@@ -50,7 +50,7 @@ spec:
     spec:
       containers:
       - name: kong
-        image: containers.cisco.com/oneidentity/kong:verbose
+        image: kong:verbose
         env:
           - name: KONG_DATABASE
             value: cassandra

@@ -52,7 +52,7 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.podIP
-          image: containers.cisco.com/oneidentity/cassandra-cluster:latest
+          image: cassandra-cluster:latest
           name: cassandra
           ports:
             - containerPort: 7000
